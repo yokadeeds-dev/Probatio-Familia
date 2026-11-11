@@ -3,6 +3,7 @@
 Abkürzungen der Quellen:
 - **GD** = Google-Drive-Sicherung `G:\Meine Ablage\Claude-Backup\VLAGSCHIVV\current\D-Rettung-Yoka\Workspace\` (Rettung des gelöschten `D:\Yoka\Workspace`)
 - **GD/main** = darin `Provolution-main` (Git, letzter Commit 1ba2422, 2026-07-01) · **GD/Vollwerk** = darin `Provolution-Vollwerk`
+  - Herkunft: alte Provolution-Historie, nach dem Neustart von GitHub `Provolution` (2026-05-27, neuer Root-Commit 8dbeb51) lokal weitergeführt. Die 4 nie gepushten Commits (a20d75b, c1951c4, 50717d8, 1ba2422) liegen seit 2026-11-11 im privaten Repo `Provolution-legacy`, Branch `rescue/d-drive-2026-07-01`.
 - **PN** = `Documents/CLAUDE WORKSPACE/Provolution-new` (= GitHub `Provolution`, main, 2026-10-14)
 - **WT** = verwaister Worktree `Documents/##### Arbeitsroot Claude/Worktrees/Provolution-main/sleepy-diffie-fd8f69`
 
