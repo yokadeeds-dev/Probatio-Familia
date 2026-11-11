@@ -1,8 +1,15 @@
 # PS-Familie – Kanonische Übersicht
 ## Probatio Systemica · Alle Module · Single Source of Truth
-### CANON-Dokument · Version 1.0 · 2026-04-09
+### CANON-Dokument · Version 1.1 · 2026-05-11
 **Autor:** Tobias Yoka Dietz
 **Status:** Kanonisch · peer-review-vorbereitet
+
+**Änderungen 1.0 → 1.1 (Coding-Checker-Audit 2026-05-11):**
+- PS (Entry-Modul) in Modulübersicht ergänzt
+- PS-U 2.0 STANDARD/JUSTICE-Modi in Formeln + Veto-Logik integriert
+- VFP-V4 Achsen-Erkennung dokumentiert
+- Canon-Dateistruktur auf `06_framework_extensions_v2.0_SECJ.md` aktualisiert
+- Versions-Spalte in Modulübersicht ergänzt
 
 ---
 
@@ -26,15 +33,19 @@ sich in Prüfobjekt, Gewichtung und Verdicts.
 
 ## 1. MODULÜBERSICHT
 
-| Modul | Name | Prüfobjekt | Kernfrage |
-|---|---|---|---|
-| PS-U | Probatio Systemica Universal | Maßnahme / System | Systemisch tragfähig? |
-| PV | Probatio Veritatis | Faktischer Claim | Empirisch haltbar? |
-| PD | Probatio Deliberativa | Politische Entscheidung | Prozessual SEC-J-konform? |
-| PI | Probatio Institutionalis | Institution | Anspruch = Realität? |
-| PN | Probatio Narrativa | Mediendiskurs | Wer spricht, wer fehlt? |
-| PP | Probatio Philosophica | Philosophisches Argument | Logisch konsistent? |
-| PT | Probatio Temporalis | Zeit / Score-Drift | Hat sich die Lage verändert? |
+| Modul | Name | Version | Prüfobjekt | Kernfrage |
+|---|---|---|---|---|
+| **PS** | **Probatio Systemica** *(Entry)* | **4.0.1** | System / Entwurf / Strategie | E1–E8-Kaskade tragfähig? |
+| PS-U:STANDARD | Probatio Systemica Universal | 2.0 | Maßnahme (Achsen 1–9) | Systemisch tragfähig? |
+| PS-U:JUSTICE | Probatio Systemica Universal | 2.0 | Maßnahme (Achse 10) | Systemisch tragfähig + J-dominant geprüft? |
+| PV | Probatio Veritatis | 2.0.3 | Faktischer Claim | Empirisch haltbar? |
+| PD | Probatio Deliberativa | 1.0.1 | Politische Entscheidung | Prozessual SEC-J-konform? |
+| PI | Probatio Institutionalis | 1.0.1 | Institution | Anspruch = Realität? |
+| PN | Probatio Narrativa | 2.0.1 | Mediendiskurs | Wer spricht, wer fehlt? |
+| PP | Probatio Philosophica | 1.0.1 | Philosophisches Argument | Logisch konsistent? |
+| PT | Probatio Temporalis | 1.0.1 | Zeit / Score-Drift | Hat sich die Lage verändert? |
+
+**Es gibt keine weiteren Sub-Module.** Insbesondere existieren **kein PE, kein PR, kein PJ**. Versions-Stand der Gem-Prompts: siehe `GEM_PROMPTS/README.md`.
 
 
 ---
@@ -42,7 +53,14 @@ sich in Prüfobjekt, Gewichtung und Verdicts.
 ## 2. FORMELN
 
 ```
-PS-U: SEC-J(m) = (0,30×S) + (0,25×E) + (0,30×C) + (0,15×J)
+PS:           Keine eigene Score-Formel — Entry-Auditor mit E1–E8-Kaskade
+              (kritische Ebenen E1, E3, E6, E8 → bei ❌ sofort FALSIFIZIERT)
+
+PS-U:STANDARD: SEC-J(m) = (0,30×S) + (0,25×E) + (0,30×C) + (0,15×J)
+               (Default für Maßnahmen auf Achsen 1–9)
+
+PS-U:JUSTICE:  SEC-J(m) = (0,25×S) + (0,15×E) + (0,20×C) + (0,40×J)    [NEU 2.0]
+               (Auto-aktiviert wenn VFP-V4 Achse 10 als Primär erkennt)
 
 PV:   PV(c)   = (0,30×S) + (0,20×E) + (0,20×C_ext) + (0,15×C_int) + (0,15×J)
       C gesamt = 0,35 (aufgespalten: C_ext=0,20 + C_int=0,15)
@@ -59,13 +77,19 @@ PT:   Keine eigene Formel – orchestriert andere Module über Zeit
       Drift: Delta(t0->tn) = Score(tn) - Score(t0)
 ```
 
+**VFP-V4 Achsen-Erkennung (NEU 2026-05-10, durch PS und PS-U genutzt):**
+- Achsen 1–9 (Wasser, Energie, Nahrung, Wohnen, Gesundheit, Mobilität, Bildung, Information, Kultur) → PS-U:STANDARD
+- Achse 10 (Gerechtigkeit) → PS-U:JUSTICE (J-dominant, J<0,50 Hard-Stop, Antifragility-Prinzip)
+
 ---
 
 ## 3. GEWICHTUNGSLOGIK
 
 | Modul | S | E | C | J | Dominante Dim. |
 |---|---|---|---|---|---|
-| PS-U | 0,30 | 0,25 | 0,30 | 0,15 | S/C gleichwertig |
+| PS | – | – | – | – | Kaskade E1–E8 (keine Score-Aggregation) |
+| PS-U:STANDARD | 0,30 | 0,25 | 0,30 | 0,15 | S/C gleichwertig |
+| PS-U:JUSTICE | 0,25 | 0,15 | 0,20 | **0,40** | **J dominant** (Achse 10) |
 | PV | 0,30 | 0,20 | 0,35* | 0,15 | C dominant |
 | PD | 0,30 | 0,20 | 0,25 | 0,25 | S führend, J/C paritätisch |
 | PI | 0,30 | 0,20 | 0,25 | 0,25 | S führend, J/C paritätisch |
@@ -81,6 +105,11 @@ PT:   Keine eigene Formel – orchestriert andere Module über Zeit
 
 | Modul | Veto-Bedingung | Konsequenz |
 |---|---|---|
+| PS | ❌ in kritischer Ebene (E1/E3/E6/E8) | FALSIFIZIERT (sofort, Kaskade-Abbruch) |
+| PS-U:STANDARD | J < 0,40 | Flag: SOZIALE INKONSISTENZ *(NEU 2.0)* |
+| PS-U:STANDARD | S/E/C < 0,40 | Flag: UNZUREICHEND / INEFFIZIENT / STRUKTURELLER WIDERSPRUCH |
+| PS-U:JUSTICE | J < 0,50 | **J-VETO HARD STOP** *(NEU 2.0, Antifragility-Prinzip)* |
+| PS-U:JUSTICE | J 0,50–0,59 | Flag: JUSTICE-MARGINAL |
 | PV | C_ext < 0,50 | FALSE (automatisch) |
 | PV | C_int = 0 | FALSE (Logik-Unmöglichkeit) |
 | PV | J < 0,40 | Flag: HARMFUL FRAMING |
@@ -220,13 +249,16 @@ PP prüft ob ein Argument die eigenen Regeln einhält.
 | 03_Band3_Scientific_Core.md | Band 3 |
 | 04_Band4_Anwendungen_v4.2.md | Provolution |
 | 05_Band5_Steuerung_Score.md | Band 5 |
-| 06_framework_extensions_v1.0_SECJ.md | PS-U |
+| **06_framework_extensions_v2.0_SECJ.md** | **PS-U 2.0 (STANDARD + JUSTICE)** *(seit 2026-05-10)* |
 | 07_Probatio_Veritatis_v2.0.md | PV v2.0 |
 | 11_Probatio_Deliberativa_v1.0.md | PD |
 | 12_Probatio_Institutionalis_v1.0.md | PI |
 | 13_Probatio_Narrativa_v1.0.md | PN |
 | 14_Probatio_Philosophica_v1.0.md | PP |
 | 15_Probatio_Temporalis_v1.0.md | PT |
+
+**Gem-Prompts (in `GEM_PROMPTS/`-Verzeichnis, nicht im Canon — Copy-Paste-Quelle für Gemini-Editor):**
+`PS_4.0.1.md` · `PV_2.0.3.md` · `PD_1.0.1.md` · `PI_1.0.1.md` · `PN_2.0.1.md` · `PP_1.0.1.md` · `PT_1.0.1.md`
 
 ---
 

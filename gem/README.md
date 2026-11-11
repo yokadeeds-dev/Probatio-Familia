@@ -10,18 +10,27 @@ Dieses Verzeichnis enthält **alles was du für einen Gem in Gemini brauchst**:
 
 ## Was zu welchem Gem hochladen — Upload-Tabelle
 
+**Konvention seit 2026-05-11:** Wissensbasis ist konsolidiert auf **4 thematische Files** *(statt 9 Einzeldateien)*. Die Konsolidate liegen in `knowledge_base/shared/_consolidated/` und werden über `_tools/regenerate_consolidated_kb.py` aus den Original-Files in `shared/` regeneriert. **Alle Sub-Module bekommen die volle Provolution-Wissensbasis** *(Trade-Off-Test 2026-05-11 mit PS: 8/8 Tests bestanden, inkl. Cross-Konsolidat-Lookup auf 140-KB-Datei)*.
+
 | Gem | Prompt | Wissensbasis-Files (Upload in Gemini) |
 |---|---|---|
-| **PF** (Familia, alle Module) | `PF_1.0.md` | **4 Konsolidate** (`shared/_consolidated/`) + **6 Subgem-Specs** (`subgems/`) = **10 Dateien (Limit)** |
-| **PS** (Entry, E1–E8-Kaskade) | `PS_2.0.md` | `knowledge_base/shared/` **komplett** (11 Files: 00 + 01–10) |
-| **PV** (Faktencheck) | `PV_2.0.2.md` | `knowledge_base/subgems/PV_spec_v2.0_2.md` · optional `shared/00_PS_Familie_Uebersicht.md` |
-| **PD** (Politikprozess) | `PD_1.0.md` | `knowledge_base/subgems/PD_spec_v1.0.md` · optional `shared/00_…` |
-| **PI** (Institutionen) | `PI_1.0.md` | `knowledge_base/subgems/PI_spec_v1.0.md` · optional `shared/00_…` |
-| **PN** (Mediendiskurs) | `PN_2.0.md` | `knowledge_base/subgems/PN_spec_v1.0.md` · optional `shared/00_…` |
-| **PP** (Normativ) | `PP_1.0.md` | `knowledge_base/subgems/PP_spec_v1.0.md` · optional `shared/00_…` |
-| **PT** (Zeitreihen) | `PT_1.0.md` | `knowledge_base/subgems/PT_spec_v1.0.md` · optional `shared/00_…` |
+| **PS** (Entry, E1–E8-Kaskade) | `PS_4.0.1.md` *(seit 2026-05-11)* | **4 Files:** alle 4 aus `knowledge_base/shared/_consolidated/` |
+| **PV** (Faktencheck) | `PV_2.0.3.md` *(seit 2026-05-11)* | **5 Files:** `subgems/PV_spec_v2.0_2.md` + alle 4 aus `shared/_consolidated/` |
+| **PD** (Politikprozess) | `PD_1.0.1.md` *(seit 2026-05-11)* | **5 Files:** `subgems/PD_spec_v1.0.md` + alle 4 aus `shared/_consolidated/` |
+| **PI** (Institutionen) | `PI_1.0.1.md` *(seit 2026-05-11)* | **5 Files:** `subgems/PI_spec_v1.0.md` + alle 4 aus `shared/_consolidated/` |
+| **PN** (Mediendiskurs) | `PN_2.0.1.md` *(seit 2026-05-11)* | **5 Files:** `subgems/PN_spec_v1.0.md` + alle 4 aus `shared/_consolidated/` |
+| **PP** (Normativ) | `PP_1.0.1.md` *(seit 2026-05-11)* | **5 Files:** `subgems/PP_spec_v1.0.md` + alle 4 aus `shared/_consolidated/` |
+| **PT** (Zeitreihen) | `PT_1.0.1.md` *(seit 2026-05-11)* | **5 Files:** `subgems/PT_spec_v1.0.md` + alle 4 aus `shared/_consolidated/` |
 
-**Hinweis zu `shared/00_PS_Familie_Uebersicht.md`:** Enthält die Cross-Routing-Logik zwischen allen Gems. Optional bei Sub-Gems, aber empfehlenswert damit der Gem weiß, wann er an andere Gems verweisen soll.
+**Die 4 Konsolidate:**
+1. `00_PS_FAMILIE_UND_ENGINE.md` *(36 KB)* — Hub + PS-U 2.0 + E0-Vorfilter
+2. `01a_BAENDE_THEORIE.md` *(117 KB)* — Bands 1+2+3
+3. `01b_BAENDE_ANWENDUNG.md` *(140 KB)* — Bands 4+5
+4. `02_PROVOLUTION_EXTENSIONS.md` *(50 KB)* — E11+E12+E13
+
+**Reserve im Gemini-10-Limit:** PS hat 6 freie Slots, Sub-Module haben 5 — komfortabel für künftige Erweiterungen.
+
+**Deploy-Bundle:** `_GEM_DEPLOY_2026-05-11/` enthält pro Gem einen Subordner mit allen nötigen Files + `00_DESCRIPTION.md` *(Titel, Version, Description, Wissensbasis-Liste, Smoke-Test)*. Plus `00_MASTER_PROMPT.md` für Comet-Assistent-gestütztes sequentielles Deployment.
 
 ---
 
@@ -29,14 +38,15 @@ Dieses Verzeichnis enthält **alles was du für einen Gem in Gemini brauchst**:
 
 | Datei | Gem | Version | Status |
 |---|---|---|---|
-| `PV_2.0.2.md` | Probatio Veritatis | 2.0.2 | ✅ 2026-04-17 überarbeitet (v1.0-Features + v2.0-Struktur + Fazit-First) |
-| `PD_1.0.md` | Probatio Deliberativa | 1.0 | ✅ 2026-04-17 aus Canon + harmonisiert |
-| `PI_1.0.md` | Probatio Institutionalis | 1.0 | ✅ 2026-04-17 aus Canon + harmonisiert |
-| `PN_2.0.md` | Probatio Narrativa | 2.0 | ✅ 2026-04-17 aus bestehendem v2.0 + harmonisiert |
-| `PP_1.0.md` | Probatio Philosophica | 1.0 | ✅ 2026-04-17 aus Canon + harmonisiert |
-| `PT_1.0.md` | Probatio Temporalis | 1.0 | ✅ 2026-04-17 konsolidiert aus Gem #1 + #5, PP-Orchestrierung + PT:PLAIN beide behalten |
-| `PF_1.0.md` | Probatio Familia (Alle Module) | 1.0.1 | ✅ 2026-05-14 — Vereinigter Mega-Gem: VFP-Dispatcher + alle 7 Module als Regelwerk-Blöcke + Chaining-Trigger + konsolidiertes Output-Format + Defensiv-Patches (Modul-Liste, PS-U Split, R16-R18) |
-| `PS_2.0.md` | Probatio Systemica (Entry) | 2.0 | ✅ 2026-04-19 konsolidiert aus `Anweisungen.md` (98 Z.) — Fazit-First + harmonisierte Modi + 4-stufige Verdicts + Hybrid-Routing zu Sub-Gems |
+| `PV_2.0.3.md` | Probatio Veritatis | 2.0.3 | ✅ 2026-05-11 — Defensiv-Patch: hardcoded Modul-Liste + R20 Architektur-Reflex + PS-U:STANDARD/JUSTICE in ABGRENZUNG (in 2.0.2 vergessen). Vorgänger: PV_2.0.2 (2026-04-17) |
+| `PD_1.0.1.md` | Probatio Deliberativa | 1.0.1 | ✅ 2026-05-11 — Defensiv-Patch: hardcoded Modul-Liste + R18 Architektur-Reflex + PS-U-Split. Vorgänger: PD_1.0 (2026-04-17) |
+| `PI_1.0.1.md` | Probatio Institutionalis | 1.0.1 | ✅ 2026-05-11 — Defensiv-Patch: hardcoded Modul-Liste + R19 Architektur-Reflex + PS-U-Split. Vorgänger: PI_1.0 (2026-04-17) |
+| `PN_2.0.1.md` | Probatio Narrativa | 2.0.1 | ✅ 2026-05-11 — Defensiv-Patch: hardcoded Modul-Liste + R17 Architektur-Reflex + PS-U-Split. Vorgänger: PN_2.0 (2026-04-17) |
+| `PP_1.0.1.md` | Probatio Philosophica | 1.0.1 | ✅ 2026-05-11 — Defensiv-Patch: hardcoded Modul-Liste + R19 Architektur-Reflex + PS-U-Split. Vorgänger: PP_1.0 (2026-04-17) |
+| `PT_1.0.1.md` | Probatio Temporalis | 1.0.1 | ✅ 2026-05-11 — Defensiv-Patch: hardcoded Modul-Liste + R17 Architektur-Reflex + PS-U-Split. Vorgänger: PT_1.0 (2026-04-17) |
+| `PS_4.0.1.md` | Probatio Systemica (Entry) | 4.0.1 | ✅ 2026-05-11 — Stabilitäts-Patch: Standalone-Konvention wiederhergestellt (4.0 war Delta-Spec), R18 Architektur-Fragen-Reflex + hardcoded Modul-Liste in IDENTITÄT → schließt Halluzinations-Vektor aus Smoke-Test 2026-05-10. Inhaltlich: VFP-V4 Achsen-Erkennung + PS-U:STANDARD/JUSTICE-Routing + R16/R17 wie in 4.0. Vorgänger: PS_4.0.md, PS_3.0.md |
+| `MiMaMa_1.1.0.md` | Mikro-Makro-Maschine (**Vor-Linse**) | 1.1.0 | 🧪 2026-06-04 — **Revival-Draft, (noch) kein Canon.** Skalen-Vor-Linse (Nano–Mikro–Meso–Makro–Meta), erzeugt Skalen-Karte + PASS/FAIL-Vorentscheidung, **kein Score/Verdict** (gehört nicht in Formel-/Verdict-Übersicht). Allen Modulen vorgeschaltet. Wissensbasis: `subgems/MMM_spec_v1.0.md`. Handle **„MiMaMa"** (nicht „MMM" — Repo-Priorität ESG: „MMM" = modulinternes M1/M2/M3-Matching). v1.1: **Quellen-Bindungs-Gate (C_ext)** + `MiMa:VERIFY`. E0-vs-MiMaMa (Ersatz/Ergänzung) = offene Kanon-Entscheidung → `01_STRATEGIE/DECISIONS/DEC_2026-06-04_mmm_revival.md`. Vorgänger: MiMaMa_1.0.0. |
+| `PF_REAL_0.4.0.md` | Probatio · Im Realbetrieb (**Anwendungs-Modus**) | 0.4.0 | 🧪 2026-06-06 — **Realbetrieb-Orchestrator, kein eigenständiges Modul.** Prüft offiziell beschlossene/parlamentarisch befasste politische Maßnahmen und gibt einen publikationsfertigen Beitrag für Provolution.org aus. Kombiniert MiMaMa-Vorfilter + passendes Probatio-Modul (PS-U/PD/PI/PN/PV/PP/PT) + J-Nature in einem Durchlauf. Trigger-Gate erforderlich (offizielle PM oder parlamentarische Befassung) — kein Eingehen auf Gerüchte/Trial-Balloons. Wissensbasis: 4 Konsolidate + `subgems/MMM_spec_v1.0.md`. Modi: `PF:REAL` / `:PT` / `:LITE` / `:CHECK`. v0.2: Rekonstruktions-Disziplin im `:PT`-Modus (Banner + `[REKONSTRUIERT]`-Flag). v0.3: AGGREGATION single-line + Delta-Header explizit + Layer-Disziplin Tool↔Web. v0.4: Trigger-Self-Widerspruchs-Sperre + Quellen-Format-Pflicht (URL/BT-Drs./BGBl.) + J-Veto-vs-J-Flag-Klärung + Banner-Position fest verankert. Strategie-Notiz im Vollwerk: `99_META/STRATEGIE_2026-06-04_provolution_org_observatorium.md`. |
 
 ---
 
@@ -113,7 +123,6 @@ Regel in jedem Prompt: Bei Widerspruch zwischen Anleitung und hochgeladener Date
 | PN | 0,20·S + 0,15·E + 0,25·C + 0,40·J | J dominant |
 | PP | 0,25·S + 0,25·E + 0,35·C + 0,15·J | C dominant |
 | PT | — | keine eigene Formel, misst Drift |
-| PF | — | dispatcht an Submodul, keine eigene Formel |
 
 ---
 
@@ -128,7 +137,6 @@ Regel in jedem Prompt: Bei Widerspruch zwischen Anleitung und hochgeladener Date
 | PP | KOHÄRENT / BEDINGT KOHÄRENT / KONTROVERS / INKOHÄRENT | IN SICH STIMMIG / ÜBERWIEGEND STIMMIG / WIDERSPRÜCHLICH / IN SICH WIDERSPRÜCHLICH |
 | PT | EMERGING / CONVERGING / STABLE / DECLINING / REVERSED / INSTABIL | IN ENTWICKLUNG / KURZ VOR ÄNDERUNG / STABIL / VERSCHLECHTERT SICH / GEÄNDERT / NOCH UNKLAR |
 | PS | BESTANDEN / TEILBESTANDEN / FALSIFIZIERT / NICHT PRÜFBAR | TRAGFÄHIG / TEILWEISE TRAGFÄHIG / NICHT TRAGFÄHIG / NICHT BEURTEILBAR |
-| PF | je nach geroutetem Submodul | erbt Verdict des aktivierten Moduls |
 
 ---
 
@@ -157,9 +165,46 @@ Regel in jedem Prompt: Bei Widerspruch zwischen Anleitung und hochgeladener Date
 
 ---
 
+## Gemini-10-Datei-Limit *(Stand 2026-05-11, Konvention konsolidiert)*
+
+Gemini Gems erlauben **maximal 10 Wissens-Dateien pro Gem**. Die ursprüngliche PS-Wissensbasis hatte 11 Einzeldateien — beim ersten Setup fiel `05_Band5_Steuerung_und_Score.md` heraus *(unbemerkt)*, was Score-/Steuerungs-Fragen blind machte.
+
+**Stufe 1 (2026-05-10):** Konsolidierung von **E11 + E12 + E13** in eine kombinierte Datei → 1 Slot frei für Band 5, 1 Reserve.
+
+**Stufe 2 (2026-05-11):** Vollkonsolidierung aller 9 shared-Files in **4 thematische Konsolidate** *(siehe Upload-Tabelle oben)*. Verifiziert mit 8/8 Tests *(siehe `_GEM_DEPLOY_2026-05-11/PS_TEST_4FILES/00_DESCRIPTION.md`)*. Damit:
+
+- **PS hat nur 4 Files** statt 9 → 6 Slots Reserve
+- **Sub-Module können nun die volle Provolution-Wissensbasis tragen** *(4 Konsolidate + 1 Spec = 5 Files)* → 5 Slots Reserve
+- Update-Aufwand pro Canon-Änderung: 1 Skript-Lauf statt 9 manuelle File-Replacements
+
+### Konsolidate regenerieren *(automatisiert)*
+
+Bei Canon-Änderungen an einem der Source-Files in `shared/`:
+
+```bash
+cd D:\Yoka\Workspace\Provolution-main
+python _tools/regenerate_consolidated_kb.py
+```
+
+Output: 4 Files in `GEM_PROMPTS/knowledge_base/shared/_consolidated/` werden überschrieben *(Header mit Datum, Source-File-Liste, BEGIN/END-Markern)*. Original-Files in `shared/` bleiben unangetastet als Source of Truth.
+
+Dann in Gemini: alte Konsolidate löschen, neue hochladen *(in jedem Gem, das das betroffene Konsolidat enthält)*.
+
+**Mapping Source → Konsolidat:**
+- `00_PS_FAMILIE_UND_ENGINE.md` ← `00_PS_Familie_Uebersicht.md` + `06_framework_extensions_v2.0_SECJ.md` + `07_extension_e0_mikro_makro_vorfilter_v1.0.md`
+- `01a_BAENDE_THEORIE.md` ← `01_band1_sec_kanon.md` + `02_entscheidungskarte.md` + `03_band3_scientific_core.md`
+- `01b_BAENDE_ANWENDUNG.md` ← `04_band4_anwendungen_v4.2_COMPLETE.md` + `05_band5_steuerung_und_score.md`
+- `02_PROVOLUTION_EXTENSIONS.md` ← `08-10_extensions_applied_combined.md` *(bereits aus Stufe 1)*
+
+**Original-Einzeldateien (00-07, 08-10)** bleiben als **Source of Truth** in `shared/` und parallel in `06_CANON/`-Strukturen. **Sie werden nicht mehr direkt zu Gemini hochgeladen** *(ersetzt durch Konsolidate)*, dienen aber als Referenz für die Regenerierung.
+
+---
+
 ## Bekannte Baustellen
 
-- **PV 2.0.2 Gem in Gemini** hat PN-Anleitung fälschlich drin → muss mit `PV_2.0.2.md` überschrieben werden (URGENT)
+- **Re-Deployment in Gemini erforderlich (2026-05-11):** alle 6 Sub-Module + PS sind defensiv gepatcht (hardcoded Modul-Liste + R-Architektur-Reflex + PS-U:STANDARD/JUSTICE-Split in ABGRENZUNG). In Gemini-Gem-Editor jeweils komplette Anleitung ersetzen. Smoke-Test danach mit Architektur-Folgefrage *(„welche Module gibt es?")* — sollte mit Verweis auf README + 00_PS_Familie_Uebersicht antworten, nicht halluzinieren.
+- **Hub-Datei `00_PS_Familie_Uebersicht.md` neu uploaden:** wurde 2026-05-11 auf v1.1 aktualisiert (PS-U 2.0 STANDARD/JUSTICE-Modi + PS-Entry + Versions-Spalte). Sie sollte in JEDEN Gem-Wissensbasis hochgeladen sein, damit R-Architektur-Reflex korrekt verweisen kann.
+- **PV 2.0.2 Gem in Gemini** hat PN-Anleitung fälschlich drin → muss mit `PV_2.0.3.md` überschrieben werden (URGENT)
 - **PT-Dopplung in Gemini:** zwei Temporalis-Gems (#1 türkis v1.0, #5 orange PT v1.0) — `PT_1.0.md` konsolidiert beide; erst anwenden, dann ggf. Dopplung löschen
 - ✅ **E11 im lokalen Gem-Ordner ergänzt** (2026-04-18, Copy aus `06_CANON/08_extension_e11_hanf_universalanwendungen_v1.0.md`). **Echter Gem in Gemini** muss separat hochgeladen werden.
 - ✅ **Canon-Korrekturen in Gem-Wissensdateien gespiegelt** (2026-04-18): Band 4 v4.2 Agentic-Restore + Dynamisierung beidseitig propagiert. Echte Gems in Gemini brauchen Re-Upload der Wissensdatei.
