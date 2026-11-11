@@ -10,4 +10,5 @@ Antworten auf Deutsch, knapp, Aktion zuerst. Überblick: `README.md`. Herkunft u
 - Kanon (`canon/`) ist mit dem Provolution-Repo (`canon/de/`) abgeglichen. Änderungen am Kanon zuerst dort oder bewusst hier mit Decision-Datei in `docs/`.
 - Inhaltliche Grenzen (MiMaMa v1.x ohne Holistik und ohne Verdict, keine weiteren Module außer den gelisteten) sind bewusst; Änderungen daran als `docs/DEC_*.md`.
 - Skripte nur ASCII (PowerShell 5.1). Dateien UTF-8 ohne BOM, LF (`.gitattributes`). Repo liegt auf exFAT: `safe.directory` global gesetzt.
+- GitHub: `yokadeeds-dev/Probatio-Familia`, privat.
 - Was in Plan, Decisions oder Memory steht, nicht erneut fragen.
